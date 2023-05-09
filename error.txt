@@ -1,0 +1,38 @@
+@name Error
+@persist C:number D:number ErrorText:string Target:entity
+@model models/props_c17/FurnitureFridge001a.mdl
+function void createFlashyText(Text:string,Scale:vector,Color:vector,Material:string)
+{
+    holoCreate(1,entity():pos()-vec(60*(1-1),0,-60))
+    holoScale(1,Scale)
+    holoModel(1,"models/sprops/misc/alphanum/alphanum_"+Text:sub(1,1)+".mdl")
+    holoColor(1,Color)
+    holoMaterial(1,Material)
+    holoParent(1,entity())
+    for(I=2,Text:length())
+    {
+        if(Text:sub(I,I) != " ")
+        {
+        holoCreate(I,entity():pos()-vec(125*(I-1),0,-60))
+        holoScale(I,Scale)
+        holoModel(I,"models/sprops/misc/alphanum/alphanum_"+Text:sub(I,I)+".mdl")
+        holoColor(I,Color)
+        holoMaterial(I,Material)
+        holoParent(I,1)
+        }
+    }
+}
+if(first())
+{
+    Target = findPlayerByName("Agent 8")
+    #Target = owner()
+    ErrorText = "Banni"
+    
+    createFlashyText(ErrorText,vec(12,24,48),vec(255,255,255),"models/error/new light1")
+    #createFlashyText(ErrorText,vec(5,1,12),vec(255,255,255),"engine/singlecolor")
+    entity():setAlpha(0)
+}
+runOnTick(1)
+holoPos(1, Target:pos()+vec(0,0,500))
+holoAng(1, ang(0,Target:eyeAngles():yaw(),0))
+#propSpawn("models/sprops/misc/alphanum/alphanum_f",ang(0,0,0),1)
